@@ -12,3 +12,6 @@ python_install:
 	@echo "<===|DEVOPS|===> [INSTALL] Python Virtual Environment"
 	@pip install --user virtualenv
 	@virtualenv python_install
+
+install: dev_environment
+	@echo "<===|DEVOPS|===> [INSTALL] Initializing Application Installation"
