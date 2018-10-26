@@ -49,3 +49,5 @@ clean: clean_logs clean_tmp
 
 clean_all: clean clean_dev
 	@echo "<===|DEVOPS|===> [CLEAN] Housekeeping, clean all"
+
+.PHONY: install dev_environment install_requirements update_requirements_file clean_logs clean_dev clean_all clean_tmp clean
