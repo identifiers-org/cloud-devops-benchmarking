@@ -15,3 +15,8 @@ python_install:
 
 install: dev_environment
 	@echo "<===|DEVOPS|===> [INSTALL] Initializing Application Installation"
+
+# Folders
+tmp:
+	@echo "<===|DEVOPS|===> [MKDIR] Temporary folder"
+	@mkdir tmp
