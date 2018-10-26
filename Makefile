@@ -24,3 +24,9 @@ tmp:
 # Environments
 dev_environment: python_install install_requirements
 	@echo "<===|DEVOPS|===> [INSTALL] Development Environment"
+
+# Dependencies
+update_requirements_file: dev_environment
+	@echo "<===|DEVOPS|===> [UPDATE] Application Requirements"
+	#@python_install/bin/pipreqs --use-local --savepath requirements.txt $(PWD)
+	@python_install/bin/pip freeze > requirements.txt
