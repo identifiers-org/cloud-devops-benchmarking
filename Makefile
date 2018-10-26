@@ -7,3 +7,8 @@ install_requirements:
 	@echo "<===|DEVOPS|===> [INSTALL] Installing Application Requirements"
 	@python_install/bin/pip install pipreqs nose
 	@python_install/bin/pip install -r requirements.txt
+
+python_install:
+	@echo "<===|DEVOPS|===> [INSTALL] Python Virtual Environment"
+	@pip install --user virtualenv
+	@virtualenv python_install
