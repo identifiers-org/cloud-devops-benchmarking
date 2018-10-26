@@ -8,3 +8,6 @@
 """
 The goal of this script is to create a benchmark report on identifiers.org Resolution API Service
 """
+
+# General Algorithm
+# TODO Get resolution
