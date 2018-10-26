@@ -6,5 +6,5 @@
 # 
 
 """
-Document your module here
+The goal of this script is to create a benchmark report on identifiers.org Resolution API Service
 """
