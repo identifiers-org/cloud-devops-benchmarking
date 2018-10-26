@@ -20,3 +20,7 @@ install: dev_environment
 tmp:
 	@echo "<===|DEVOPS|===> [MKDIR] Temporary folder"
 	@mkdir tmp
+
+# Environments
+dev_environment: python_install install_requirements
+	@echo "<===|DEVOPS|===> [INSTALL] Development Environment"
