@@ -30,3 +30,22 @@ update_requirements_file: dev_environment
 	@echo "<===|DEVOPS|===> [UPDATE] Application Requirements"
 	#@python_install/bin/pipreqs --use-local --savepath requirements.txt $(PWD)
 	@python_install/bin/pip freeze > requirements.txt
+
+# Housekeeping
+clean_dev:
+	@echo "<===|DEVOPS|===> [CLEAN] Removing Python Virtual Environment"
+	@rm -rf python_install
+
+clean_logs:
+	@echo "<===|DEVOPS|===> [CLEAN] Removing logs"
+	@rm -rf logs/*log
+
+clean_tmp:
+	@echo "<===|DEVOPS|===> [CLEAN] Removing Temporary folder"
+	@rm -rf tmp
+
+clean: clean_logs clean_tmp
+	@echo "<===|DEVOPS|===> [CLEAN] Housekeeping"
+
+clean_all: clean clean_dev
+	@echo "<===|DEVOPS|===> [CLEAN] Housekeeping, clean all"
