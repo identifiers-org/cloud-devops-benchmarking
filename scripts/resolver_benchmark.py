@@ -182,7 +182,7 @@ def get_compact_identifiers_dataset():
 
 def get_response_times_for_compact_identifiers(compact_identifiers):
     logger.info("")
-    response_times = np.array()
+    response_times = np.array([])
     for compact_identifier in compact_identifiers:
         query_url = "{}/{}".format(get_resolution_endpoint(), compact_identifier)
         start_time = lambda: int(round(time.time() * 1000))
