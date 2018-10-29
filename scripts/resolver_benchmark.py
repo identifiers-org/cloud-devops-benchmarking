@@ -156,9 +156,13 @@ def grow_dataset(dataset, nfinal=1000000):
     if nfinal < len(dataset):
         nfinal = len(dataset)
     grown_dataset = np.append(grown_dataset, dataset)
+    logger.info("Growing initial dataset of #{} elements up to #{} elements".format(len(dataset), nfinal))
     while len(grown_dataset) <= nfinal:
         growth_size = min(len(grown_dataset), nfinal - len(grown_dataset))
-        grown_dataset = np.append(grown_dataset, random.sample(dataset, growth_size))
+        logger.debug("Growth step, +{} items".format(growth_size))
+        grown_dataset = np.append(grown_dataset, dataset[: growth_size])
+    random.shuffle(grown_dataset)
+    return grown_dataset
 
 
 def get_compact_identifiers_dataset():
@@ -194,7 +198,7 @@ def get_compact_identifiers_dataset():
 
 
 def get_response_times_for_compact_identifiers(compact_identifiers):
-    logger.info("")
+    logger.info("Measuring Response Times for #{} Compact Identifiers".format(len(compact_identifiers)))
     response_times = []
     for compact_identifier in compact_identifiers:
         query_url = "{}/{}".format(get_resolution_endpoint(), compact_identifier)
