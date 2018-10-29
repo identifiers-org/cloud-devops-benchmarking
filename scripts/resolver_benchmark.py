@@ -15,7 +15,7 @@ import time
 import random
 import logging
 import requests
-import numpy as np
+from scipy import stats
 
 
 # Set logging
@@ -205,8 +205,8 @@ def main():
     # Get resolution dataset
     compact_identifiers = get_compact_identifiers_dataset()
     # Measure response time
-    response_times = np.array(get_response_times_for_compact_identifiers(compact_identifiers))
-    print("Response Times description:\n{}".format(response_times.describe()))
+    response_times = get_response_times_for_compact_identifiers(compact_identifiers)
+    print("Response Times description:\n{}".format(stats.describe(response_times)))
 
 
 if __name__ == '__main__':
