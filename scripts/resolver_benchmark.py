@@ -141,7 +141,7 @@ def get_compact_identifiers_dataset():
     resolution_dataset = []
     if HQ_RESPONSE_KEY_PAYLOAD in response and HQ_RESPONSE_KEY_PAYLOAD_NAMESPACES in response[HQ_RESPONSE_KEY_PAYLOAD]:
         resolution_dataset = response[HQ_RESPONSE_KEY_PAYLOAD][HQ_RESPONSE_KEY_PAYLOAD_NAMESPACES]
-    logger.debug("Building Compact Identifiers for #{} namespaces".format(len(resolution_dataset)))
+    logger.info("Building Compact Identifiers for #{} namespaces".format(len(resolution_dataset)))
     compact_identifiers = []
     for namespace in resolution_dataset:
         if PID_ENTRY_KEY_PREFIX not in namespace or namespace[PID_ENTRY_KEY_PREFIX] is None:
