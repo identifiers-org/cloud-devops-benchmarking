@@ -220,12 +220,11 @@ def get_response_times_for_compact_identifiers(compact_identifiers):
         delta_time = stop_time - start_time
         response_times_stats[index]['Response_time(ms)'] = delta_time
         response_times.append(delta_time)
-    return response_times, response_times_stats
+    return response_times, pd.DataFrame(response_times_stats).transpose()
 
 
 def present_response_times_stats(stats):
-    stats_df = pd.DataFrame(stats)
-    print("--- Response Times Stats ---\n{}".format(stats_df.transpose()))
+    print("--- Response Times Stats ---\n{}".format(stats))
     print("----------------------------")
 
 
