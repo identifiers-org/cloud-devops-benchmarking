@@ -181,10 +181,16 @@ def get_compact_identifiers_dataset():
 
 
 def get_response_times_for_compact_identifiers(compact_identifiers):
+    logger.info("")
+    response_times = np.array()
     for compact_identifier in compact_identifiers:
         query_url = "{}/{}".format(get_resolution_endpoint(), compact_identifier)
         start_time = lambda: int(round(time.time() * 1000))
-        response =
+        response = make_unique_rest_request_content_type_json(query_url)
+        stop_time = lambda: int(round(time.time() * 1000))
+        delta_time = stop_time - start_time
+        np.append(delta_time)
+    return response_times
 
 
 def main():
@@ -192,7 +198,8 @@ def main():
     # Get resolution dataset
     compact_identifiers = get_compact_identifiers_dataset()
     # Measure response time
-
+    response_times = get_response_times_for_compact_identifiers(compact_identifiers)
+    print("Response Times description:\n{}".format(response_times.describe()))
 
 
 if __name__ == '__main__':
