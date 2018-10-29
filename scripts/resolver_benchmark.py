@@ -47,7 +47,7 @@ def get_logger_for(self, name):
     :return: a new logger on that name
     """
     lg = logging.getLogger(name)
-    for handler in :
+    for handler in get_log_handlers():
         lg.addHandler(handler)
     lg.setLevel(_log_level)
     return lg
