@@ -157,10 +157,11 @@ def grow_dataset(dataset, nfinal=1000000):
         nfinal = len(dataset)
     grown_dataset = np.append(grown_dataset, dataset)
     logger.info("Growing initial dataset of #{} elements up to #{} elements".format(len(dataset), nfinal))
-    while len(grown_dataset) <= nfinal:
+    while len(grown_dataset) < nfinal:
         growth_size = min(len(grown_dataset), nfinal - len(grown_dataset))
         logger.debug("Growth step, +{} items".format(growth_size))
         grown_dataset = np.append(grown_dataset, dataset[: growth_size])
+    logger.info("Shuffling grown dataset of #{} items".format(len(grown_dataset)))
     random.shuffle(grown_dataset)
     return grown_dataset
 
