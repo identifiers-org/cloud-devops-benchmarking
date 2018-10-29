@@ -107,7 +107,10 @@ def get_resolution_endpoint():
 
 
 def get_hq_registry_resolution_dataset_endpoint():
-
+    global __hq_registry_resolution_dataset_endpoint
+    if __hq_registry_resolution_dataset_endpoint is None:
+        __hq_registry_resolution_dataset_endpoint = "{}://{}/resolutionApi/getResolverDataset"
+    return __hq_registry_resolution_dataset_endpoint
 
 
 def make_rest_request_content_type_json(url):
