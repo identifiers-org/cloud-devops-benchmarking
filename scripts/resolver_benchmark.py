@@ -18,6 +18,7 @@ import requests
 
 # Environment
 resolver_host = os.environ.get('RESOLVER_HOST', 'resolver.api.identifiers.org')
+current_region_name = os.environ.get('CURRENT_REGION_NAME', 'EU')
 
 # Helpers
 def make_rest_request_content_type_json(url):
