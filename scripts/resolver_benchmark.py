@@ -58,6 +58,7 @@ logger = get_logger_for('main')
 
 # Environment
 resolver_host = os.environ.get('RESOLVER_HOST', 'resolver.api.identifiers.org')
+protocol = os.environ.get('PROTOCOL', 'http')
 current_region_name = os.environ.get('CURRENT_REGION_NAME', 'EU')
 
 
