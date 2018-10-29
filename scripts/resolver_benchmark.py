@@ -20,7 +20,15 @@ import requests
 resolver_host = os.environ.get('RESOLVER_HOST', 'resolver.api.identifiers.org')
 current_region_name = os.environ.get('CURRENT_REGION_NAME', 'EU')
 
+
 # Helpers
+def print_information():
+    logging.info("{} INFORMATION {}".format("-" * 20, "-" * 20))
+    logging.info("Destination Resolver Host: {}".format(resolver_host))
+    logging.info("Current Region Name: {}".format(current_region_name))
+    logging.info("{}============={}".format("-" * 20, "-" * 20))
+
+
 def make_rest_request_content_type_json(url):
     # TODO - Magic number here!!!
     n_attempts = 42
@@ -40,6 +48,13 @@ def make_rest_request_content_type_json(url):
         time.sleep(random.randint(10))
     response.raise_for_status()
 
-# General Algorithm
-# TODO Get resolution dataset
-# TODO Iterate over namespaces requesting the resolver to solve a sample compact identifier within each namespace
+
+def main():
+    print_information()
+    # General Algorithm
+    # TODO Get resolution dataset
+    # TODO Iterate over namespaces requesting the resolver to solve a sample compact identifier within each namespace
+
+
+if __name__ == '__main__':
+    main()
