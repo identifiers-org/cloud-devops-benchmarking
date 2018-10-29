@@ -16,6 +16,7 @@ import random
 import logging
 import requests
 import numpy as np
+import pandas as pd
 from scipy import stats
 
 
@@ -219,7 +220,11 @@ def get_response_times_for_compact_identifiers(compact_identifiers):
         delta_time = stop_time - start_time
         response_times_stats['Response_time(ms)'] = delta_time
         response_times.append(delta_time)
-    return response_times
+    return response_times, response_times_stats
+
+
+def present_response_times_stats(stats):
+    # TODO
 
 
 def main():
@@ -227,7 +232,7 @@ def main():
     # Get resolution dataset
     compact_identifiers = get_compact_identifiers_dataset()
     # Measure response time
-    response_times = get_response_times_for_compact_identifiers(grow_dataset(compact_identifiers, 1000))
+    response_times, response_times_stats = get_response_times_for_compact_identifiers(grow_dataset(compact_identifiers, 1000))
     print("Response Times description:\n{}".format(stats.describe(response_times)))
 
 
