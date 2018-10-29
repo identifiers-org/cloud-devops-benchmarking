@@ -236,6 +236,8 @@ def main():
     # Measure response time
     response_times, response_times_stats = get_response_times_for_compact_identifiers(grow_dataset(compact_identifiers, 1000))
     print("Response Times description:\n{}".format(stats.describe(response_times)))
+    # Print Response times statistics
+    present_response_times_stats(response_times_stats)
 
 
 if __name__ == '__main__':
