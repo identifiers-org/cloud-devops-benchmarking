@@ -99,7 +99,7 @@ def print_information():
 def get_resolution_endpoint():
     global __resolution_endpoint
     if __resolution_endpoint is None:
-        __resolution_endpoint = "http://{}/".format(resolver_host)
+        __resolution_endpoint = "{}://{}/".format(protocol, resolver_host)
     return __resolution_endpoint
 
 
