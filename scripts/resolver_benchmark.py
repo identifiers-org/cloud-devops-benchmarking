@@ -224,7 +224,9 @@ def get_response_times_for_compact_identifiers(compact_identifiers):
 
 
 def present_response_times_stats(stats):
-    # TODO
+    stats_df = pd.DataFrame(stats)
+    print("--- Response Times Stats ---\n{}".format(stats.df))
+    print("----------------------------")
 
 
 def main():
