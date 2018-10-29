@@ -83,12 +83,23 @@ RESOURCE_ENTRY_KEY_TEST_STRING = 'testString'
 RESOURCE_ENTRY_KEY_RESOURCE_URL = 'resourceURL'
 
 
+# Globals
+__resolution_endpoint = None
+
+
 # Helpers
 def print_information():
     logger.info("{} INFORMATION {}".format("-" * 20, "-" * 20))
     logger.info("Destination Resolver Host: {}".format(resolver_host))
     logger.info("Current Region Name: {}".format(current_region_name))
     logger.info("{}============={}".format("-" * 20, "-" * 20))
+
+
+def get_resolution_endpoint():
+    global __resolution_endpoint
+    if __resolution_endpoint is None:
+        __resolution_endpoint = "http://{}/".format(resolver_host)
+    return __resolution_endpoint
 
 
 def make_rest_request_content_type_json(url):
