@@ -66,6 +66,7 @@ current_region_name = os.environ.get('CURRENT_REGION_NAME', 'EU')
 target_resolver_service_name = os.environ.get("TARGET_RESOLVER_SERVICE_NAME", 'cloud')
 hq_registry_host = os.environ.get('HQ_REGISTRY_HOST', 'registry.api.hq.identifiers.org')
 hq_registry_protocol = os.environ.get('HQ_REGISTRY_PROTOCOL', 'http')
+request_mode = os.environ.get('REQUEST_MODE', 'api')
 
 
 # To be externalized
@@ -158,6 +159,17 @@ def make_unique_rest_request_content_type_json(url):
     response.raise_for_status()
 
 
+def make_unique_http_get_request(url):
+    response = None
+    try:
+        response = requests.get(url)
+    except Exception as e:
+        logger.error("EXCEPTION on request URL '{}', '{}'".format(url, e))
+    if response.ok:
+        return response
+    response.raise_for_status()
+
+
 def grow_dataset(dataset, nfinal=1000000):
     grown_dataset = []
     if nfinal < len(dataset):
@@ -215,7 +227,10 @@ def get_response_times_for_compact_identifiers(compact_identifiers):
         response_times_stats[index]['url'] = query_url
         start_time = current_time_millis()
         try:
-            response = make_unique_rest_request_content_type_json(query_url)
+            if request_mode == 'api':
+                response = make_unique_rest_request_content_type_json(query_url)
+            else:
+                response = make_unique_http_get_request(query_url)
         except Exception as e:
             logger.error("ERROR measuring response time for URL '{}', error '{}'".format(query_url, e))
             response_times_stats[index]['status'] = 'ERROR'
