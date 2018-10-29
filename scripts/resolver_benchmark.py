@@ -238,12 +238,14 @@ def main():
     # Get resolution dataset
     compact_identifiers = get_compact_identifiers_dataset()
     # Measure response time
-    response_times, response_times_stats = get_response_times_for_compact_identifiers(grow_dataset(compact_identifiers, 100))
+    response_times, response_times_stats = get_response_times_for_compact_identifiers(grow_dataset(compact_identifiers, 1000))
     print("Response Times description:\n{}".format(stats.describe(response_times)))
     # Print Response times statistics
     present_response_times_stats(response_times_stats)
     # Dump response times stats
-    response_times_stats.to_csv("response_times_stats.csv")
+    file_response_times_stats = os.path.join(get_reports_folder(), "{}-response_times_stats.csv".format(current_region_name))
+    logger.info("Dumping response times stats to file '{}'".format(file_response_times_stats))
+    response_times_stats.to_csv(file_response_times_stats)
 
 
 if __name__ == '__main__':
