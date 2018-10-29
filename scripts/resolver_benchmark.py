@@ -10,10 +10,50 @@ The goal of this script is to create a benchmark report on identifiers.org Resol
 """
 
 import os
+import sys
 import time
 import random
 import logging
 import requests
+
+
+# Set logging
+# Logging defaults
+_logger_formatters = {
+    "DEBUG": "%(asctime)s [%(levelname)7s][%(name)18s][%(module)18s, %(lineno)4s] %(message)s",
+    "INFO": "%(asctime)s [%(levelname)7s][%(name)18s] %(message)s"
+}
+_log_level = 'DEBUG'
+
+__log_handlers = []
+
+for llevel, lformat in _logger_formatters.items():
+    lhandler = logging.StreamHandler(stream=sys.stdout)
+    lhandler.setLevel(getattr(logging, _log_level))
+    lformatter = logging.Formatter(_logger_formatters[_log_level])
+    lhandler.setFormatter(lformatter)
+    __log_handlers.append(lhandler)
+
+
+def get_log_handlers():
+    global __log_handlers
+    return __log_handlers
+
+
+def get_logger_for(self, name):
+    """
+    Create a logger on demand
+    :param name: name to be used in the logger
+    :return: a new logger on that name
+    """
+    lg = logging.getLogger(name)
+    for handler in :
+        lg.addHandler(handler)
+    lg.setLevel(_log_level)
+    return lg
+
+
+logger = get_logger_for('main')
 
 
 # Environment
@@ -23,10 +63,10 @@ current_region_name = os.environ.get('CURRENT_REGION_NAME', 'EU')
 
 # Helpers
 def print_information():
-    logging.info("{} INFORMATION {}".format("-" * 20, "-" * 20))
-    logging.info("Destination Resolver Host: {}".format(resolver_host))
-    logging.info("Current Region Name: {}".format(current_region_name))
-    logging.info("{}============={}".format("-" * 20, "-" * 20))
+    logger.info("{} INFORMATION {}".format("-" * 20, "-" * 20))
+    logger.info("Destination Resolver Host: {}".format(resolver_host))
+    logger.info("Current Region Name: {}".format(current_region_name))
+    logger.info("{}============={}".format("-" * 20, "-" * 20))
 
 
 def make_rest_request_content_type_json(url):
