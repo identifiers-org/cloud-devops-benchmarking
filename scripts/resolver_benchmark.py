@@ -205,27 +205,27 @@ def get_response_times_for_compact_identifiers(compact_identifiers):
     response_times = []
     for index, compact_identifier in enumerate(compact_identifiers):
         query_url = "{}/{}".format(get_resolution_endpoint(), compact_identifier)
-        response_times_stats['index'] = index
-        response_times_stats['url'] = query_url
+        response_times_stats[index] = {}
+        response_times_stats[index]['url'] = query_url
         start_time = current_time_millis()
         try:
             response = make_unique_rest_request_content_type_json(query_url)
         except Exception as e:
             logger.error("ERROR measuring response time for URL '{}', error '{}'".format(query_url, e))
-            response_times_stats['status'] = 'ERROR'
-            response_times_stats['error'] = "{}".format(e)
+            response_times_stats[index]['status'] = 'ERROR'
+            response_times_stats[index]['error'] = "{}".format(e)
             continue
-        response_times_stats['status'] = 'OK'
+        response_times_stats[index]['status'] = 'OK'
         stop_time = current_time_millis()
         delta_time = stop_time - start_time
-        response_times_stats['Response_time(ms)'] = delta_time
+        response_times_stats[index]['Response_time(ms)'] = delta_time
         response_times.append(delta_time)
     return response_times, response_times_stats
 
 
 def present_response_times_stats(stats):
     stats_df = pd.DataFrame(stats)
-    print("--- Response Times Stats ---\n{}".format(stats.df))
+    print("--- Response Times Stats ---\n{}".format(stats_df.transpose()))
     print("----------------------------")
 
 
@@ -234,7 +234,7 @@ def main():
     # Get resolution dataset
     compact_identifiers = get_compact_identifiers_dataset()
     # Measure response time
-    response_times, response_times_stats = get_response_times_for_compact_identifiers(grow_dataset(compact_identifiers, 1000))
+    response_times, response_times_stats = get_response_times_for_compact_identifiers(grow_dataset(compact_identifiers, 100))
     print("Response Times description:\n{}".format(stats.describe(response_times)))
     # Print Response times statistics
     present_response_times_stats(response_times_stats)
