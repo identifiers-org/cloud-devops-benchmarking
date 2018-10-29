@@ -95,6 +95,9 @@ __hq_registry_resolution_dataset_endpoint = None
 
 
 # Helpers
+current_time_millis = lambda: int(round(time.time() * 1000))
+
+
 def print_information():
     logger.info("{} INFORMATION {}".format("-" * 20, "-" * 20))
     logger.info("Destination Resolver Host: {}".format(resolver_host))
@@ -185,9 +188,9 @@ def get_response_times_for_compact_identifiers(compact_identifiers):
     response_times = np.array([])
     for compact_identifier in compact_identifiers:
         query_url = "{}/{}".format(get_resolution_endpoint(), compact_identifier)
-        start_time = lambda: int(round(time.time() * 1000))
+        start_time = current_time_millis()
         response = make_unique_rest_request_content_type_json(query_url)
-        stop_time = lambda: int(round(time.time() * 1000))
+        stop_time = current_time_millis()
         delta_time = stop_time - start_time
         np.append(delta_time)
     return response_times
