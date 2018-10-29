@@ -167,12 +167,16 @@ def get_compact_identifiers_dataset():
     return compact_identifiers
 
 
+def get_response_times_for_compact_identifiers(compact_identifiers):
+    # TODO
+
+
 def main():
     print_information()
+    # Get resolution dataset
     compact_identifiers = get_compact_identifiers_dataset()
-    # General Algorithm
-    # TODO Get resolution dataset
-    # TODO Iterate over namespaces requesting the resolver to solve a sample compact identifier within each namespace
+    # Measure response time
+
 
 
 if __name__ == '__main__':
