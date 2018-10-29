@@ -24,15 +24,15 @@ _logger_formatters = {
     "INFO": "%(asctime)s [%(levelname)7s][%(name)18s] %(message)s"
 }
 _log_level = 'DEBUG'
-
+# In case I want multiple handlers
 __log_handlers = []
 
-for llevel, lformat in _logger_formatters.items():
-    lhandler = logging.StreamHandler(stream=sys.stdout)
-    lhandler.setLevel(getattr(logging, _log_level))
-    lformatter = logging.Formatter(_logger_formatters[_log_level])
-    lhandler.setFormatter(lformatter)
-    __log_handlers.append(lhandler)
+lformat = _logger_formatters[_log_level]
+lhandler = logging.StreamHandler(stream=sys.stdout)
+lhandler.setLevel(getattr(logging, _log_level))
+lformatter = logging.Formatter(_logger_formatters[_log_level])
+lhandler.setFormatter(lformatter)
+__log_handlers.append(lhandler)
 
 
 def get_log_handlers():
