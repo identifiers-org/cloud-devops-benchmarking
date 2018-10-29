@@ -23,7 +23,7 @@ _logger_formatters = {
     "DEBUG": "%(asctime)s [%(levelname)7s][%(name)10s][%(module)18s, %(lineno)4s] %(message)s",
     "INFO": "%(asctime)s [%(levelname)7s][%(name)10s] %(message)s"
 }
-_log_level = 'DEBUG'
+_log_level = os.environ.get('LOGLEVEL', 'INFO')
 # In case I want multiple handlers
 __log_handlers = []
 
