@@ -88,6 +88,7 @@ RESOURCE_ENTRY_KEY_RESOURCE_URL = 'resourceURL'
 
 # Globals
 __resolution_endpoint = None
+__hq_registry_resolution_dataset_endpoint = None
 
 
 # Helpers
@@ -103,6 +104,10 @@ def get_resolution_endpoint():
     if __resolution_endpoint is None:
         __resolution_endpoint = "{}://{}/".format(resolver_protocol, resolver_host)
     return __resolution_endpoint
+
+
+def get_hq_registry_resolution_dataset_endpoint():
+
 
 
 def make_rest_request_content_type_json(url):
