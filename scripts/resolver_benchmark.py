@@ -162,7 +162,7 @@ def make_unique_rest_request_content_type_json(url):
 def make_unique_http_get_request(url):
     response = None
     try:
-        response = requests.get(url)
+        response = requests.get(url, allow_redirects=False)
     except Exception as e:
         logger.error("EXCEPTION on request URL '{}', '{}'".format(url, e))
     if response.ok:
