@@ -20,8 +20,8 @@ import requests
 # Set logging
 # Logging defaults
 _logger_formatters = {
-    "DEBUG": "%(asctime)s [%(levelname)7s][%(name)18s][%(module)18s, %(lineno)4s] %(message)s",
-    "INFO": "%(asctime)s [%(levelname)7s][%(name)18s] %(message)s"
+    "DEBUG": "%(asctime)s [%(levelname)7s][%(name)10s][%(module)18s, %(lineno)4s] %(message)s",
+    "INFO": "%(asctime)s [%(levelname)7s][%(name)10s] %(message)s"
 }
 _log_level = 'DEBUG'
 # In case I want multiple handlers
@@ -87,6 +87,10 @@ def make_rest_request_content_type_json(url):
         # Random wait - TODO - Another magic number!!!
         time.sleep(random.randint(10))
     response.raise_for_status()
+
+
+def get_compact_identifiers_dataset():
+    # TODO
 
 
 def main():
