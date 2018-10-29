@@ -58,7 +58,7 @@ logger = get_logger_for('main')
 
 # Environment
 resolver_host = os.environ.get('RESOLVER_HOST', 'resolver.api.identifiers.org')
-protocol = os.environ.get('PROTOCOL', 'http')
+resolver_protocol = os.environ.get('PROTOCOL', 'http')
 current_region_name = os.environ.get('CURRENT_REGION_NAME', 'EU')
 hq_registry_host = os.environ.get('HQ_REGISTRY_HOST', 'registry.api.hq.identifiers.org')
 hq_registry_protocol = os.environ.get('HQ_REGISTRY_PROTOCOL', 'http')
@@ -101,7 +101,7 @@ def print_information():
 def get_resolution_endpoint():
     global __resolution_endpoint
     if __resolution_endpoint is None:
-        __resolution_endpoint = "{}://{}/".format(protocol, resolver_host)
+        __resolution_endpoint = "{}://{}/".format(resolver_protocol, resolver_host)
     return __resolution_endpoint
 
 
