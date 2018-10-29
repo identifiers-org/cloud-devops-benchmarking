@@ -40,7 +40,7 @@ def get_log_handlers():
     return __log_handlers
 
 
-def get_logger_for(self, name):
+def get_logger_for(name):
     """
     Create a logger on demand
     :param name: name to be used in the logger
