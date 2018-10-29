@@ -9,11 +9,15 @@
 The goal of this script is to create a benchmark report on identifiers.org Resolution API Service
 """
 
+import os
 import time
 import random
 import logging
 import requests
 
+
+# Environment
+resolver_host = os.environ.get('RESOLVER_HOST', 'resolver.api.identifiers.org')
 
 # Helpers
 def make_rest_request_content_type_json(url):
