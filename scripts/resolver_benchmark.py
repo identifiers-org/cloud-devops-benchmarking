@@ -61,6 +61,28 @@ resolver_host = os.environ.get('RESOLVER_HOST', 'resolver.api.identifiers.org')
 current_region_name = os.environ.get('CURRENT_REGION_NAME', 'EU')
 
 
+# Constants
+# Resolution Source Data Model
+PID_ENTRY_KEY_ID = 'id'
+PID_ENTRY_KEY_NAME = 'name'
+PID_ENTRY_KEY_PATTERN = 'pattern'
+PID_ENTRY_KEY_DEFINITION = 'definition'
+PID_ENTRY_KEY_PREFIX = 'prefix'
+PID_ENTRY_KEY_URL = 'url'
+PID_ENTRY_KEY_PREFIXED = 'prefixed'
+PID_ENTRY_KEY_RESOURCES = 'resources'
+RESOURCE_ENTRY_KEY_ID = 'id'
+RESOURCE_ENTRY_KEY_ACCESS_URL = 'accessURL'
+RESOURCE_ENTRY_KEY_INFO = 'info'
+RESOURCE_ENTRY_KEY_INSTITUTION = 'institution'
+RESOURCE_ENTRY_KEY_LOCATION = 'location'
+RESOURCE_ENTRY_KEY_OFFICIAL = 'official'
+RESOURCE_ENTRY_KEY_RESOURCE_PREFIX = 'resourcePrefix'
+RESOURCE_ENTRY_KEY_LOCAL_ID = 'localId'
+RESOURCE_ENTRY_KEY_TEST_STRING = 'testString'
+RESOURCE_ENTRY_KEY_RESOURCE_URL = 'resourceURL'
+
+
 # Helpers
 def print_information():
     logger.info("{} INFORMATION {}".format("-" * 20, "-" * 20))
