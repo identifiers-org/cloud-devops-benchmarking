@@ -15,6 +15,7 @@ import time
 import random
 import logging
 import requests
+import numpy as np
 
 
 # Set logging
@@ -104,7 +105,7 @@ def print_information():
 def get_resolution_endpoint():
     global __resolution_endpoint
     if __resolution_endpoint is None:
-        __resolution_endpoint = "{}://{}/".format(resolver_protocol, resolver_host)
+        __resolution_endpoint = "{}://{}".format(resolver_protocol, resolver_host)
     return __resolution_endpoint
 
 
@@ -133,6 +134,18 @@ def make_rest_request_content_type_json(url):
         # Random wait - TODO - Another magic number!!!
         time.sleep(random.randint(10))
     response.raise_for_status()
+
+
+def make_unique_rest_request_content_type_json(url):
+    response = None
+    try:
+        response = requests.get(url, headers={"Content-Type": "application/json"})
+    except Exception as e:
+        logger.error("EXCEPTION on request URL '{}', '{}'".format(url, e))
+    if response.ok:
+        return response.json()
+    response.raise_for_status()
+
 
 
 def get_compact_identifiers_dataset():
@@ -168,7 +181,10 @@ def get_compact_identifiers_dataset():
 
 
 def get_response_times_for_compact_identifiers(compact_identifiers):
-    # TODO
+    for compact_identifier in compact_identifiers:
+        query_url = "{}/{}".format(get_resolution_endpoint(), compact_identifier)
+        start_time = lambda: int(round(time.time() * 1000))
+        response =
 
 
 def main():
