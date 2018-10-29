@@ -237,6 +237,8 @@ def main():
     print("Response Times description:\n{}".format(stats.describe(response_times)))
     # Print Response times statistics
     present_response_times_stats(response_times_stats)
+    # Dump response times stats
+    response_times_stats.to_csv("response_times_stats.csv")
 
 
 if __name__ == '__main__':
