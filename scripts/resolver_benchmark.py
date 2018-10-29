@@ -200,17 +200,24 @@ def get_compact_identifiers_dataset():
 
 def get_response_times_for_compact_identifiers(compact_identifiers):
     logger.info("Measuring Response Times for #{} Compact Identifiers".format(len(compact_identifiers)))
+    response_times_stats = {}
     response_times = []
-    for compact_identifier in compact_identifiers:
+    for index, compact_identifier in enumerate(compact_identifiers):
         query_url = "{}/{}".format(get_resolution_endpoint(), compact_identifier)
+        response_times_stats['index'] = index
+        response_times_stats['url'] = query_url
         start_time = current_time_millis()
         try:
             response = make_unique_rest_request_content_type_json(query_url)
         except Exception as e:
             logger.error("ERROR measuring response time for URL '{}', error '{}'".format(query_url, e))
+            response_times_stats['status'] = 'ERROR'
+            response_times_stats['error'] = "{}".format(e)
             continue
+        response_times_stats['status'] = 'OK'
         stop_time = current_time_millis()
         delta_time = stop_time - start_time
+        response_times_stats['Response_time(ms)'] = delta_time
         response_times.append(delta_time)
     return response_times
 
