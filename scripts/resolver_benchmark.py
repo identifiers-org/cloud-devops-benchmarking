@@ -67,6 +67,11 @@ hq_registry_host = os.environ.get('HQ_REGISTRY_HOST', 'registry.api.hq.identifie
 hq_registry_protocol = os.environ.get('HQ_REGISTRY_PROTOCOL', 'http')
 
 
+# To be externalized
+def get_reports_folder():
+    return "reports"
+
+
 # Constants
 # Resolution Source Data Model
 HQ_RESPONSE_KEY_PAYLOAD = 'payload'
