@@ -60,6 +60,7 @@ logger = get_logger_for('main')
 resolver_host = os.environ.get('RESOLVER_HOST', 'resolver.api.identifiers.org')
 protocol = os.environ.get('PROTOCOL', 'http')
 current_region_name = os.environ.get('CURRENT_REGION_NAME', 'EU')
+hq_registry_host = os.environ.get('HQ_REGISTRY_HOST', 'registry.api.hq.identifiers.org')
 
 
 # Constants
