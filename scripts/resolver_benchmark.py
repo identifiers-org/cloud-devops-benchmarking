@@ -15,6 +15,7 @@ import time
 import random
 import logging
 import requests
+import numpy as np
 from scipy import stats
 
 
@@ -150,6 +151,15 @@ def make_unique_rest_request_content_type_json(url):
     response.raise_for_status()
 
 
+def grow_dataset(dataset, nfinal=1000000):
+    grown_dataset = []
+    if nfinal < len(dataset):
+        nfinal = len(dataset)
+    grown_dataset = np.append(grown_dataset, dataset)
+    while len(grown_dataset) <= nfinal:
+        growth_size = min(len(grown_dataset), nfinal - len(grown_dataset))
+        grown_dataset = np.append(grown_dataset, random.sample(dataset, growth_size))
+
 
 def get_compact_identifiers_dataset():
     # Get resolution dataset
@@ -205,7 +215,7 @@ def main():
     # Get resolution dataset
     compact_identifiers = get_compact_identifiers_dataset()
     # Measure response time
-    response_times = get_response_times_for_compact_identifiers(compact_identifiers)
+    response_times = get_response_times_for_compact_identifiers(grow_dataset(compact_identifiers, 1000))
     print("Response Times description:\n{}".format(stats.describe(response_times)))
 
 
