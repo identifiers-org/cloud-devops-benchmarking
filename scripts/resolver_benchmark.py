@@ -67,6 +67,7 @@ target_resolver_service_name = os.environ.get("TARGET_RESOLVER_SERVICE_NAME", 'c
 hq_registry_host = os.environ.get('HQ_REGISTRY_HOST', 'registry.api.hq.identifiers.org')
 hq_registry_protocol = os.environ.get('HQ_REGISTRY_PROTOCOL', 'http')
 request_mode = os.environ.get('REQUEST_MODE', 'api')
+benchmark_origin_name = os.environ.get('BENCHMARK_ORIGIN_NAME', 'laptop_ebi')
 
 
 # To be externalized
