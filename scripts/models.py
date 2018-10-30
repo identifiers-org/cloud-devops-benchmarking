@@ -96,7 +96,7 @@ class ResponseTimeDataset:
                    '# Success': self.get_number_success_entries(),
                    '# Error': self.get_number_error_entries(),
                    'Mean Response Time(ms)': self.get_response_time_arithmetic_mean(),
-                   'Mode Response Time(ms)': self.get_response_time_mode(),
+                   'Mode Response Time(ms)': self.get_response_time_mode()[0],
                    'Median Response Time(ms)': self.get_response_time_median(),
                    'Standard Deviation(ms)': self.get_response_time_standard_deviation()}
         df = pd.DataFrame(columns=columns)
