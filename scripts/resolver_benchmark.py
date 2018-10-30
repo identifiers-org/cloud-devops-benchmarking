@@ -111,6 +111,7 @@ def print_information():
     logger.info("{} INFORMATION {}".format("-" * 20, "-" * 20))
     logger.info("Destination Resolver Host: {}".format(resolver_host))
     logger.info("Current Region Name: {}".format(current_region_name))
+    logger.info("Destination Deployment: {}".format(target_resolver_service_name))
     logger.info("{}============={}".format("-" * 20, "-" * 20))
 
 
@@ -255,7 +256,7 @@ def main():
     compact_identifiers = get_compact_identifiers_dataset()
     # Measure response time
     response_times, response_times_stats = get_response_times_for_compact_identifiers(grow_dataset(compact_identifiers, 100))
-    print("Response Times description:\n{}".format(pd.DataFrame(stats.describe(response_times), index=0)))
+    print("Response Times description:\n{}".format(pd.DataFrame(stats.describe(response_times))))
     # Print Response times statistics
     present_response_times_stats(response_times_stats)
     # Dump response times stats
