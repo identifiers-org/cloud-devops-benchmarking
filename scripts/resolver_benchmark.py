@@ -18,6 +18,8 @@ import requests
 import numpy as np
 import pandas as pd
 from scipy import stats
+# App imports
+from . import models
 
 
 # Set logging
@@ -229,12 +231,14 @@ def get_compact_identifiers_dataset():
 
 def get_response_times_for_compact_identifiers(compact_identifiers):
     logger.info("Measuring Response Times for #{} Compact Identifiers".format(len(compact_identifiers)))
+    response_times_dataset = models.ResponseTimeDataset()
     response_times_stats = {}
     response_times = []
     for index, compact_identifier in enumerate(compact_identifiers):
         query_url = "{}/{}".format(get_resolution_endpoint(), compact_identifier)
         response_times_stats[index] = {}
         response_times_stats[index][RESPONSE_TIME_DATASET_KEY_URL] = query_url
+        response_time_entry = models.ResponseTimeEntry(url=query_url)
         start_time = current_time_millis()
         try:
             if request_mode == 'api':
@@ -245,12 +249,18 @@ def get_response_times_for_compact_identifiers(compact_identifiers):
             logger.error("ERROR measuring response time for URL '{}', error '{}'".format(query_url, e))
             response_times_stats[index][RESPONSE_TIME_DATASET_KEY_STATUS] = RESPONSE_TIME_DATASET_VALUE_STATUS_ERROR
             response_times_stats[index][RESPONSE_TIME_DATASET_KEY_ERROR] = "{}".format(e)
+            response_time_entry.error = "{}".format(e)
+            response_time_entry.status = models.ResponseTimeDataset.RESPONSE_TIME_DATASET_VALUE_STATUS_ERROR
+            response_times_dataset.add_entry(response_time_entry)
             continue
         response_times_stats[index][RESPONSE_TIME_DATASET_KEY_STATUS] = RESPONSE_TIME_DATASET_VALUE_STATUS_OK
         stop_time = current_time_millis()
         delta_time = stop_time - start_time
         response_times_stats[index][RESPONSE_TIME_DATASET_KEY_RESPONSE_TIME] = delta_time
         response_times.append(delta_time)
+        response_time_entry.status = models.ResponseTimeDataset.RESPONSE_TIME_DATASET_VALUE_STATUS_OK
+        response_time_entry.response_time = delta_time
+        response_times_dataset.add_entry(response_time_entry)
     return response_times, pd.DataFrame(response_times_stats).transpose()
 
 

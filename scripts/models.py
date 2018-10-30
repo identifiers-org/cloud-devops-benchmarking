@@ -9,10 +9,43 @@
 This module contains data models used by the benchmarking scripts
 """
 
+import pandas as pd
 
+
+# NOTE - I think I won't need this level of abstraction, I can remove it later
 class ResponseTimeEntry:
     def __init__(self, url=None, status=None, error=None, response_time=None):
         self.url = url
         self.status = status
         self.error = error
         self.response_time = response_time
+
+
+class ResponseTimeDataset:
+    RESPONSE_TIME_DATASET_KEY_URL = 'url'
+    RESPONSE_TIME_DATASET_KEY_STATUS = 'status'
+    RESPONSE_TIME_DATASET_KEY_ERROR = 'error'
+    RESPONSE_TIME_DATASET_KEY_RESPONSE_TIME = 'Response_Time(ms)'
+    RESPONSE_TIME_DATASET_VALUE_STATUS_ERROR = 'ERROR'
+    RESPONSE_TIME_DATASET_VALUE_STATUS_OK = 'OK'
+    # Columns
+    RESPONSE_TIME_DATASET_COLUMNS = [RESPONSE_TIME_DATASET_KEY_STATUS,
+                                     RESPONSE_TIME_DATASET_KEY_RESPONSE_TIME,
+                                     RESPONSE_TIME_DATASET_KEY_URL,
+                                     RESPONSE_TIME_DATASET_KEY_ERROR]
+
+    def __init__(self):
+        self.entries = pd.DataFrame(columns=self.RESPONSE_TIME_DATASET_COLUMNS)
+
+    def get_new_index(self):
+        self.__index += 1
+        return self.__index - 1
+
+    def get_data_entry_from_response_time_entry(self, response_time_entry):
+        return {self.RESPONSE_TIME_DATASET_KEY_STATUS: response_time_entry.status,
+                self.RESPONSE_TIME_DATASET_KEY_RESPONSE_TIME: response_time_entry.response_time,
+                self.RESPONSE_TIME_DATASET_KEY_URL: response_time_entry.url,
+                self.RESPONSE_TIME_DATASET_KEY_ERROR: response_time_entry.error}
+
+    def add_entry(self, response_time_entry):
+        self.entries = self.entries.append(self.get_data_entry_from_response_time_entry(response_time_entry), ignore_index=True)
