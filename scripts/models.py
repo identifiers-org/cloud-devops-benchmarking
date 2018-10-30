@@ -81,6 +81,9 @@ class ResponseTimeDataset:
     def get_response_time_standard_deviation(self):
         return self.get_successful_entries()[self.RESPONSE_TIME_DATASET_KEY_RESPONSE_TIME].std()
 
+    def to_csv(self, file_path):
+        self.entries.to_csv(file_path)
+
 
 
 if __name__ == '__main__':
