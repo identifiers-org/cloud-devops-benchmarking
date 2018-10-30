@@ -295,6 +295,8 @@ def main():
     file_response_times_stats = os.path.join(get_reports_folder(), "{}-response_times_stats.csv".format(file_prefix))
     logger.info("Dumping response times stats to file '{}'".format(file_response_times_stats))
     response_times_dataset.stats_to_csv(file_response_times_stats)
+    with open(os.path.join(get_reports_folder(), "done.flag"), 'w') as f:
+        f.write("Done!")
 
 
 if __name__ == '__main__':
