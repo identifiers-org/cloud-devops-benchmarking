@@ -247,9 +247,15 @@ def get_response_times_for_compact_identifiers(compact_identifiers):
     return response_times, pd.DataFrame(response_times_stats).transpose()
 
 
-def present_response_times_stats(stats):
-    print("--- Response Times Stats ---\n{}".format(stats))
-    print("----------------------------")
+def present_response_times_stats(response_times_dataset):
+    logger.info("--- Response Times Stats ---")
+    logger.info("Number of tests: #{}".format(len(response_times_dataset)))
+    logger.info("Successful tests: #{} ({:.2f}%)".format(0, 0.0))
+    logger.info("ERROR Rate: {:.2f}%".format(0.0))
+    logger.info("Mean response time: {:.2f}".format(0.0))
+    logger.info("Median response time: {:.2f}".format(0.0))
+    logger.info("Skewness: {:.2f}".format(0.0))
+    logger.info("----------------------------")
 
 
 def main():
@@ -257,14 +263,14 @@ def main():
     # Get resolution dataset
     compact_identifiers = get_compact_identifiers_dataset()
     # Measure response time
-    response_times, response_times_stats = get_response_times_for_compact_identifiers(grow_dataset(compact_identifiers, 100))
+    response_times, response_times_dataset = get_response_times_for_compact_identifiers(grow_dataset(compact_identifiers, 100))
     print("Response Times description:\n{}".format(pd.DataFrame(stats.describe(response_times))))
     # Print Response times statistics
-    present_response_times_stats(response_times_stats)
+    present_response_times_stats(response_times_dataset)
     # Dump response times stats
     file_response_times_stats = os.path.join(get_reports_folder(), "{}-to-{}_at_{}-response_times_stats.csv".format(benchmark_origin_name, target_resolver_service_name, current_region_name))
     logger.info("Dumping response times stats to file '{}'".format(file_response_times_stats))
-    response_times_stats.to_csv(file_response_times_stats)
+    response_times_dataset.to_csv(file_response_times_stats)
 
 
 if __name__ == '__main__':
