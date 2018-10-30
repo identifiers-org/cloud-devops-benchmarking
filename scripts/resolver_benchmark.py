@@ -112,6 +112,7 @@ def print_information():
     logger.info("{} INFORMATION {}".format("-" * 20, "-" * 20))
     logger.info("Destination Resolver Host: {}".format(resolver_host))
     logger.info("Current Region Name: {}".format(current_region_name))
+    logger.info("Benchmark Origin: {}".format(benchmark_origin_name))
     logger.info("Destination Deployment: {}".format(target_resolver_service_name))
     logger.info("{}============={}".format("-" * 20, "-" * 20))
 
