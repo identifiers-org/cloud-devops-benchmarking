@@ -8,3 +8,11 @@
 """
 This module contains data models used by the benchmarking scripts
 """
+
+
+class ResponseTimeEntry:
+    def __init__(self, url=None, status=None, error=None, response_time=None):
+        self.url = url
+        self.status = status
+        self.error = error
+        self.response_time = response_time
