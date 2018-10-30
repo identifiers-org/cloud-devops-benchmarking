@@ -257,7 +257,7 @@ def get_response_times_for_compact_identifiers(compact_identifiers):
 def present_response_times_stats(response_times_dataset):
     logger.info("--- Response Times Stats ---")
     logger.info("Number of tests: #{}".format(len(response_times_dataset)))
-    logger.info("Successful tests: #{} ({:.2f}%)".format(0, 0.0))
+    logger.info("Successful tests: #{} ({:.2f}%)".format(len(response_times_dataset[RESPONSE_TIME_DATASET_KEY_RESPONSE_TIME][response_times_dataset[RESPONSE_TIME_DATASET_KEY_RESPONSE_TIME].notnull()]), 0.0))
     logger.info("ERROR Rate: {:.2f}%".format(0.0))
     logger.info("Mean response time: {:.2f}".format(0.0))
     logger.info("Median response time: {:.2f}".format(0.0))
@@ -270,7 +270,7 @@ def main():
     # Get resolution dataset
     compact_identifiers = get_compact_identifiers_dataset()
     # Measure response time
-    response_times, response_times_dataset = get_response_times_for_compact_identifiers(grow_dataset(compact_identifiers[:10], 10))
+    response_times, response_times_dataset = get_response_times_for_compact_identifiers(grow_dataset(compact_identifiers[:100], 10))
     print("Response Times description:\n{}".format(stats.describe(response_times)))
     # Print Response times statistics
     present_response_times_stats(response_times_dataset)
