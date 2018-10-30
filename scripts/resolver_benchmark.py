@@ -288,9 +288,12 @@ def main():
     # Print Response times statistics
     present_response_times_stats(response_times_dataset)
     # Dump response times stats
-    file_response_times_stats = os.path.join(get_reports_folder(), "{}-to-{}_at_{}-response_times_stats.csv".format(benchmark_origin_name, target_resolver_service_name, current_region_name))
-    logger.info("Dumping response times stats to file '{}'".format(file_response_times_stats))
-    response_times_dataset.to_csv(file_response_times_stats)
+    file_prefix = "{}-to-{}_at_{}".format(benchmark_origin_name, target_resolver_service_name, current_region_name)
+    file_response_times_dataset = os.path.join(get_reports_folder(), "{}-response_times_dataset.csv".format(file_prefix))
+    logger.info("Dumping response times stats to file '{}'".format(file_response_times_dataset))
+    response_times_dataset.to_csv(file_response_times_dataset)
+    file_response_times_stats = os.path.join(get_reports_folder(), "{}-response_times_stats.csv".format(file_prefix))
+    response_times_dataset.stats_to_csv(file_response_times_stats)
 
 
 if __name__ == '__main__':
