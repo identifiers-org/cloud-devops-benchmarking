@@ -11,7 +11,7 @@ install_requirements:
 python_install:
 	@echo "<===|DEVOPS|===> [INSTALL] Python Virtual Environment"
 	@pip install --user virtualenv
-	@virtualenv python_install
+	@virtualenv -p `which python3` python_install
 
 install: dev_environment
 	@echo "<===|DEVOPS|===> [INSTALL] Initializing Application Installation"
