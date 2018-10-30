@@ -2,3 +2,4 @@
 .idea
 python_install
 **/__pycache__/**
+data_samples
