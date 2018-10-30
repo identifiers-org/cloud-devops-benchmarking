@@ -272,7 +272,7 @@ def present_response_times_stats(response_times_dataset):
     logger.info("Successful tests: #{} ({:.2f}%)".format(response_times_dataset.get_number_success_entries(), success_rate))
     logger.info("ERROR Rate: {:.2f}%".format(error_rate))
     logger.info("Mean response time: {:.2f}".format(response_times_dataset.get_response_time_arithmetic_mean()))
-    logger.info("Mode: {:.2f}".format(response_times_dataset.get_response_time_arithmetic_mode()))
+    logger.info("Mode: {:.2f}".format(response_times_dataset.get_response_time_mode()))
     logger.info("Median response time: {:.2f}".format(response_times_dataset.get_response_time_arithmetic_median()))
     logger.info("----------------------------")
 
