@@ -78,6 +78,9 @@ class ResponseTimeDataset:
     def get_response_time_mode(self):
         return self.get_successful_entries()[self.RESPONSE_TIME_DATASET_KEY_RESPONSE_TIME].mode()
 
+    def get_response_time_standard_deviation(self):
+        return self.get_successful_entries()[self.RESPONSE_TIME_DATASET_KEY_RESPONSE_TIME].std()
+
 
 
 if __name__ == '__main__':
