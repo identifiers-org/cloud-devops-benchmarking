@@ -99,8 +99,8 @@ class ResponseTimeDataset:
                 self.get_response_time_mode(),
                 self.get_response_time_median(),
                 self.get_response_time_standard_deviation()]
-        df = pd.DataFrame(data=data, columns=columns)
-        df.to_csv(file_path)
+        df = pd.DataFrame(columns=columns)
+        df.append(data=data, ignore_index=True).to_csv(file_path)
 
 
 
