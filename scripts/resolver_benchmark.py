@@ -19,7 +19,7 @@ import numpy as np
 import pandas as pd
 from scipy import stats
 # App imports
-from .models import ResponseTimeDataset, ResponseTimeEntry
+from models import ResponseTimeEntry, ResponseTimeDataset
 
 
 # Set logging
@@ -261,17 +261,19 @@ def get_response_times_for_compact_identifiers(compact_identifiers):
         response_time_entry.status = ResponseTimeDataset.RESPONSE_TIME_DATASET_VALUE_STATUS_OK
         response_time_entry.response_time = delta_time
         response_times_dataset.add_entry(response_time_entry)
-    return response_times, pd.DataFrame(response_times_stats).transpose()
+    return response_times, response_times_dataset
 
 
 def present_response_times_stats(response_times_dataset):
+    success_rate = response_times_dataset.get_number_success_entries() * 100.0 / response_times_dataset.get_number_of_entries();
+    error_rate = response_times_dataset.get_number_error_entries() * 100.0 / response_times_dataset.get_number_of_entries();
     logger.info("--- Response Times Stats ---")
-    logger.info("Number of tests: #{}".format(len(response_times_dataset)))
-    logger.info("Successful tests: #{} ({:.2f}%)".format(len(response_times_dataset[RESPONSE_TIME_DATASET_KEY_RESPONSE_TIME][response_times_dataset[RESPONSE_TIME_DATASET_KEY_RESPONSE_TIME].notnull()]), 0.0))
-    logger.info("ERROR Rate: {:.2f}%".format(0.0))
-    logger.info("Mean response time: {:.2f}".format(0.0))
-    logger.info("Median response time: {:.2f}".format(0.0))
-    logger.info("Skewness: {:.2f}".format(0.0))
+    logger.info("Number of tests: #{}".format(response_times_dataset.get_number_of_entries()))
+    logger.info("Successful tests: #{} ({:.2f}%)".format(response_times_dataset.get_number_success_entries(), success_rate))
+    logger.info("ERROR Rate: {:.2f}%".format(error_rate))
+    logger.info("Mean response time: {:.2f}".format(response_times_dataset.get_response_time_arithmetic_mean()))
+    logger.info("Mode: {:.2f}".format(response_times_dataset.get_response_time_arithmetic_mode()))
+    logger.info("Median response time: {:.2f}".format(response_times_dataset.get_response_time_arithmetic_median()))
     logger.info("----------------------------")
 
 
@@ -280,14 +282,14 @@ def main():
     # Get resolution dataset
     compact_identifiers = get_compact_identifiers_dataset()
     # Measure response time
-    response_times, response_times_dataset = get_response_times_for_compact_identifiers(grow_dataset(compact_identifiers[:100], 10))
+    response_times, response_times_dataset = get_response_times_for_compact_identifiers(grow_dataset(compact_identifiers[:10], 10))
     print("Response Times description:\n{}".format(stats.describe(response_times)))
     # Print Response times statistics
     present_response_times_stats(response_times_dataset)
     # Dump response times stats
     file_response_times_stats = os.path.join(get_reports_folder(), "{}-to-{}_at_{}-response_times_stats.csv".format(benchmark_origin_name, target_resolver_service_name, current_region_name))
-    logger.info("Dumping response times stats to file '{}'".format(file_response_times_stats))
-    response_times_dataset.to_csv(file_response_times_stats)
+    #logger.info("Dumping response times stats to file '{}'".format(file_response_times_stats))
+    #response_times_dataset.to_csv(file_response_times_stats)
 
 
 if __name__ == '__main__':

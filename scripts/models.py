@@ -10,6 +10,7 @@ This module contains data models used by the benchmarking scripts
 """
 
 import pandas as pd
+from scipy import stats
 
 
 # NOTE - I think I won't need this level of abstraction, I can remove it later
@@ -49,3 +50,35 @@ class ResponseTimeDataset:
 
     def add_entry(self, response_time_entry):
         self.entries = self.entries.append(self.get_data_entry_from_response_time_entry(response_time_entry), ignore_index=True)
+
+    def get_entries_dataframe(self):
+        return self.entries
+
+    def get_number_of_entries(self):
+        return self.entries.shape[0]
+
+    def get_successful_entries(self):
+        return self.entries[self.entries[self.RESPONSE_TIME_DATASET_KEY_RESPONSE_TIME].notnull()]
+
+    def get_error_entries(self):
+        return self.entries[self.entries[self.RESPONSE_TIME_DATASET_KEY_RESPONSE_TIME].isnull()]
+
+    def get_number_success_entries(self):
+        return len(self.get_successful_entries())
+
+    def get_number_error_entries(self):
+        return len(self.get_error_entries())
+
+    def get_response_time_arithmetic_mean(self):
+        return self.get_successful_entries()[self.RESPONSE_TIME_DATASET_KEY_RESPONSE_TIME].mean()
+
+    def get_response_time_median(self):
+        return self.get_successful_entries()[self.RESPONSE_TIME_DATASET_KEY_RESPONSE_TIME].median()
+
+    def get_response_time_mode(self):
+        return self.get_successful_entries()[self.RESPONSE_TIME_DATASET_KEY_RESPONSE_TIME].mode()
+
+
+
+if __name__ == '__main__':
+    print("")
