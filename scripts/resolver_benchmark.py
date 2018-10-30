@@ -262,7 +262,7 @@ def main():
     # Print Response times statistics
     present_response_times_stats(response_times_stats)
     # Dump response times stats
-    file_response_times_stats = os.path.join(get_reports_folder(), "{}-{}-response_times_stats.csv".format(target_resolver_service_name, current_region_name))
+    file_response_times_stats = os.path.join(get_reports_folder(), "{}-to-{}_at_{}-response_times_stats.csv".format(benchmark_origin_name, target_resolver_service_name, current_region_name))
     logger.info("Dumping response times stats to file '{}'".format(file_response_times_stats))
     response_times_stats.to_csv(file_response_times_stats)
 
