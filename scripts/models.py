@@ -6,5 +6,5 @@
 # 
 
 """
-Document your module here
+This module contains data models used by the benchmarking scripts
 """
