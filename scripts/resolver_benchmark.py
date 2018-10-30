@@ -102,6 +102,8 @@ RESPONSE_TIME_DATASET_KEY_URL = 'url'
 RESPONSE_TIME_DATASET_KEY_STATUS = 'status'
 RESPONSE_TIME_DATASET_KEY_ERROR = 'error'
 RESPONSE_TIME_DATASET_KEY_RESPONSE_TIME = 'Response_Time(ms)'
+RESPONSE_TIME_DATASET_VALUE_STATUS_ERROR = 'ERROR'
+RESPONSE_TIME_DATASET_VALUE_STATUS_OK = 'OK'
 
 
 # Globals
@@ -241,10 +243,10 @@ def get_response_times_for_compact_identifiers(compact_identifiers):
                 response = make_unique_http_get_request(query_url)
         except Exception as e:
             logger.error("ERROR measuring response time for URL '{}', error '{}'".format(query_url, e))
-            response_times_stats[index][RESPONSE_TIME_DATASET_KEY_STATUS] = 'ERROR'
+            response_times_stats[index][RESPONSE_TIME_DATASET_KEY_STATUS] = RESPONSE_TIME_DATASET_VALUE_STATUS_ERROR
             response_times_stats[index][RESPONSE_TIME_DATASET_KEY_ERROR] = "{}".format(e)
             continue
-        response_times_stats[index][RESPONSE_TIME_DATASET_KEY_STATUS] = 'OK'
+        response_times_stats[index][RESPONSE_TIME_DATASET_KEY_STATUS] = RESPONSE_TIME_DATASET_VALUE_STATUS_OK
         stop_time = current_time_millis()
         delta_time = stop_time - start_time
         response_times_stats[index][RESPONSE_TIME_DATASET_KEY_RESPONSE_TIME] = delta_time
