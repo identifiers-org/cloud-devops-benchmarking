@@ -85,6 +85,13 @@ class ResponseTimeDataset:
         self.entries.to_csv(file_path)
 
     def stats_to_csv(self, file_path):
+        columns = ['# Tests',
+                   '# Success',
+                   '# Error',
+                   'Mean Response Time(ms)',
+                   'Mode Response Time(ms)',
+                   'Median Response Time(ms)',
+                   'Standard Deviation(ms)']
         data = {'# Tests': self.get_number_of_entries(),
                    '# Success': self.get_number_success_entries(),
                    '# Error': self.get_number_error_entries(),
@@ -92,8 +99,8 @@ class ResponseTimeDataset:
                    'Mode Response Time(ms)': self.get_response_time_mode(),
                    'Median Response Time(ms)': self.get_response_time_median(),
                    'Standard Deviation(ms)': self.get_response_time_standard_deviation()}
-        df = pd.DataFrame(data)
-        df.to_csv(file_path)
+        df = pd.DataFrame(columns=columns)
+        df.append(data, ignore_index=True).to_csv(file_path)
 
 
 
