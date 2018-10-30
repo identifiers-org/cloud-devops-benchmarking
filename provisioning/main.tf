@@ -9,6 +9,18 @@ resource "google_compute_address" "static" {
     name = "ipv4-address"
 }
 
+data "template_file" "launchscript" {
+    template = "${file("launch_benchmark.sh")}"
+
+    vars {
+        RESOLVER_HOST = "${var.benchmark_resolver_host}"
+        RESOLVER_PROTOCOL = "${var.benchmark_resolver_protocol}"
+        TARGET_RESOLVER_SERVICE_NAME = "${var.benchmark_target_resolver_service_name}"
+        REQUEST_MODE = "${var.benchmark_request_mode}"
+        BENCHMARK_ORIGIN_NAME = "${var.benchmark_benchmark_origin_name}"
+    }
+}
+
 resource "google_compute_instance" "resolverBenchmarkVM" {
     name = "resolverbenchmarkvm"
     machine_type = "g1-small"
