@@ -290,9 +290,10 @@ def main():
     # Dump response times stats
     file_prefix = "{}-to-{}_at_{}".format(benchmark_origin_name, target_resolver_service_name, current_region_name)
     file_response_times_dataset = os.path.join(get_reports_folder(), "{}-response_times_dataset.csv".format(file_prefix))
-    logger.info("Dumping response times stats to file '{}'".format(file_response_times_dataset))
+    logger.info("Dumping response times dataset to file '{}'".format(file_response_times_dataset))
     response_times_dataset.to_csv(file_response_times_dataset)
     file_response_times_stats = os.path.join(get_reports_folder(), "{}-response_times_stats.csv".format(file_prefix))
+    logger.info("Dumping response times stats to file '{}'".format(file_response_times_stats))
     response_times_dataset.stats_to_csv(file_response_times_stats)
 
 
