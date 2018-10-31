@@ -28,6 +28,7 @@ resource "google_compute_instance" "resolverBenchmarkVM" {
     user_data = <<-EOF
                 #!/bin/bash
                 echo "Hello World" > test_init_user_data.txt
+                EOF
 
     tags = ["${var.working_region}", "resolver-benchmark"]
 
