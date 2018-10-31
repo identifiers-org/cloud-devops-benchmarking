@@ -4,8 +4,8 @@
 folder_script_home=$(dirname "$0")
 folder_reports=${PROVISIONING_FOLDER_REPORTS:='reports'}
 folder_tmp=${PROVISIONING_FOLDER_TMP:='tmp'}
-pending_regions=( europe-west4 us-central1 australia-southeast1 asia-east1 asia-northeast1 asia-south1 )
-regions=( australia-southeast1 )
+all_regions=( europe-west4 us-central1 australia-southeast1 asia-east1 asia-northeast1 asia-south1 )
+regions=( europe-west4 us-central1 australia-southeast1 asia-east1 asia-northeast1 asia-south1 )
 vm_name_prefix='resolver-benchmarkvm'
 vm_script_init="${folder_script_home}"/vminit.sh
 vm_script_app_install="${folder_script_home}"/install_benchmark_app.sh
