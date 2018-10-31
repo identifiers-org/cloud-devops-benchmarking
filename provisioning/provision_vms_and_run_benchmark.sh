@@ -1,7 +1,8 @@
 #!/bin/bash
 folder_script_home=$(dirname "$0")
 folder_reports='reports'
-regions=( europe-west4 us-central1 australia-southeast1 asia-east1 asia-northeast1 asia-south1 )
+pending_zones=( us-central1 australia-southeast1 asia-east1 asia-northeast1 asia-south1 )
+regions=( europe-west4 )
 vm_name_prefix='resolver-benchmarkvm'
 
 # Logging subsystem
