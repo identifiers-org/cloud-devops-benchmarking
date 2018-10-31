@@ -27,8 +27,8 @@ for region in "${regions[@]}"; do
     #gcloud -q compute --project=${google_cloud_project} instances create ${vm_name} --zone=${zone} --machine-type=n1-standard-1 --subnet=default --network-tier=PREMIUM --maintenance-policy=MIGRATE --service-account=${google_cloud_service_account} --scopes=https://www.googleapis.com/auth/cloud-platform --image=debian-9-stretch-v20181011 --image-project=debian-cloud --boot-disk-size=10GB --boot-disk-type=pd-standard --boot-disk-device-name=${vm_name} --labels=app=resolver-benchmark,region=${region}
     vm_external_ip=`gcloud compute instances list --filter=${vm_name} --format=yaml | grep natIP | cut -f2 -d':' | awk '{$1=$1;print}'`
     echo -e "\tVM External IP: ${vm_external_ip}"
-    #created_vms_and_zones=( ["${vm_name}"]="${zone}" "${created_vms_and_zones[@]}" )
-    #created_vms_and_ips=( ["${vm_name}"]="${vm_external_ip}" "${created_vms_and_ips[@]}" )
+    created_vms_and_zones=( ["${vm_name}"]="${zone}" "${created_vms_and_zones[@]}" )
+    created_vms_and_ips=( ["${vm_name}"]="${vm_external_ip}" "${created_vms_and_ips[@]}" )
     ssh-keygen -R ${vm_external_ip}
     echo -e "\tInit VM... (${vm_script_init})"
     #scp -o "StrictHostKeyChecking no" -o "UserKnownHostsFile /dev/null" "${vm_script_init}" ${vm_external_ip}:~/.
@@ -60,4 +60,8 @@ for region in "${regions[@]}"; do
     ssh -f -o "StrictHostKeyChecking no" -o "UserKnownHostsFile /dev/null" ${vm_external_ip} "nohup bash `basename ${file_ebi_benchmark}` > app/reports/`basename ${file_ebi_benchmark}`.log 2>&1 &"
 done
 
-echo "---> Starting Results collection"
+echo "[[[ --- Starting Results collection --- ]]]"
+for vm_name in "${!created_vms_and_ips}"; do
+    ip_address="${created_vms_and_ips[$vm_name]}"
+    echo "---> Collecting results from ${vm_name} at ${ip_address}"
+done
