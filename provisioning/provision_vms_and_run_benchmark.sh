@@ -10,6 +10,11 @@ vm_name_prefix='resolver-benchmarkvm'
 vm_script_init="${folder_script_home}"/vminit.sh
 vm_script_app_install="${folder_script_home}"/install_benchmark_app.sh
 vm_script_run_benchmark_template="${folder_script_home}"/launch_benchmark_template.sh
+# THE FOLLOWING ARE NEEDED FROM ENVIRONMENT
+google_cloud_project=${PROVISIONING_GOOGLE_CLOUD_PROJECT:='not_provided'}
+google_cloud_service_account=${PROVISIONING_GOOGLE_CLOUD_SERVICE_ACCOUNT:='not_provided'}
+
+# TODO - Check the needed variables
 
 # Logging subsystem
 source "${folder_script_home}"/tinylogger.bash
@@ -80,6 +85,7 @@ for vm_name in "${created_vms[@]}"; do
     done
     echo -e "\tCollecting reports..."
     scp -o "StrictHostKeyChecking no" -o "UserKnownHostsFile /dev/null" ${vm_external_ip}:~/app/reports/* "${folder_reports}"/.
-    echo -e "\tVM Decommissioning..."
-    gcloud compute instances
+    vm_zone=`gcloud compute instances list --filter=resolver-benchmarkvm-europe-west4 --format=yaml | grep zone:`
+    vm_zone="${vm_zone##*/}"
+    echo -e "\tDecommissioning VM '${vm_name}', zone '${vm_zone}'"
 done
