@@ -61,7 +61,7 @@ for region in "${regions[@]}"; do
 done
 
 echo "[[[ --- Starting Results collection --- ]]]"
-for vm_name in "${!created_vms_and_ips}"; do
+for vm_name in "${!created_vms_and_ips[@]}"; do
     ip_address="${created_vms_and_ips[$vm_name]}"
     echo "---> Collecting results from ${vm_name} at ${ip_address}"
 done
