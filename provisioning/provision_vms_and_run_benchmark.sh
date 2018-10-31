@@ -79,5 +79,5 @@ for vm_name in "${created_vms[@]}"; do
         n_reports=`ssh -o "StrictHostKeyChecking no" -o "UserKnownHostsFile /dev/null" ${ip_address} "ls -alh app/reports/*csv" 2> /dev/null | wc -l | awk '{$1=$1;print}'`
     done
     echo -e "\tCollecting reports..."
-    scp -o "StrictHostKeyChecking no" -o "UserKnownHostsFile /dev/null" ${vm_external_ip}:~/app/reports/. "${folder_reports}"/.
+    scp -o "StrictHostKeyChecking no" -o "UserKnownHostsFile /dev/null" ${vm_external_ip}:~/app/reports/* "${folder_reports}"/.
 done
