@@ -7,6 +7,7 @@ regions=( europe-west4 )
 vm_name_prefix='resolver-benchmarkvm'
 vm_script_init="${folder_script_home}"/vminit.sh
 vm_script_app_install="${folder_script_home}"/install_benchmark_app.sh
+vm_script_run_benchmark_template="${folder_script_home}"/launch_benchmark_template.sh
 
 # Logging subsystem
 source "${folder_script_home}"/tinylogger.bash
