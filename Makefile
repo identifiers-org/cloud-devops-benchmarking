@@ -10,7 +10,7 @@ install_requirements:
 
 python_install:
 	@echo "<===|DEVOPS|===> [INSTALL] Python Virtual Environment"
-	@pip install --user virtualenv
+	@pip3 install --user virtualenv
 	@virtualenv -p `which python3` python_install
 
 install: dev_environment
