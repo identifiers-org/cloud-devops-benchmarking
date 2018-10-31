@@ -45,6 +45,7 @@ for region in "${regions[@]}"; do
     sed -i "s/PLACEHOLDER_RESOLVER_PROTOCOL/https/g" "${file_ebi_benchmark}"
     sed -i "s/PLACEHOLDER_TARGET_RESOLVER_SERVICE_NAME/ebi/g" "${file_ebi_benchmark}"
     sed -i "s/PLACEHOLDER_REQUEST_MODE/noapi/g" "${file_ebi_benchmark}"
+    sed -i "s/PLACEHOLDER_CURRENT_REGION_NAME/europe/g" "${file_ebi_benchmark}"
     scp -o "StrictHostKeyChecking no" -o "UserKnownHostsFile /dev/null" "${file_ebi_benchmark}" ${vm_external_ip}:~/.
     echo -e "\tConfiguring benchmark for cloud deployment, '${file_cloud_benchmark}'"
     cp "${vm_script_run_benchmark_template}" "${file_cloud_benchmark}"
@@ -52,6 +53,7 @@ for region in "${regions[@]}"; do
     sed -i "s/PLACEHOLDER_RESOLVER_PROTOCOL/http/g" "${file_cloud_benchmark}"
     sed -i "s/PLACEHOLDER_TARGET_RESOLVER_SERVICE_NAME/cloud/g" "${file_cloud_benchmark}"
     sed -i "s/PLACEHOLDER_REQUEST_MODE/api/g" "${file_cloud_benchmark}"
+    sed -i "s/PLACEHOLDER_CURRENT_REGION_NAME/${region}/g" "${file_cloud_benchmark}"
     scp -o "StrictHostKeyChecking no" -o "UserKnownHostsFile /dev/null" "${file_cloud_benchmark}" ${vm_external_ip}:~/.
     echo -e "\tLaunching benchmarks"
     ssh -f -o "StrictHostKeyChecking no" -o "UserKnownHostsFile /dev/null" ${vm_external_ip} "nohup bash `basename ${file_cloud_benchmark}` > app/reports/`basename ${file_cloud_benchmark}`.log 2>&1 &"
