@@ -15,8 +15,10 @@ source "${folder_script_home}"/tinylogger.bash
 # Set the logging level
 LOGGER_LVL=debug
 
-created_vms_and_zones=( )
-created_vms_and_ips=( )
+# Buck you shell scripting! no idea how to build these associative arrays
+declare -a created_vms_and_zones
+declare -a created_vms_and_ips
+created_vms=( )
 for region in "${regions[@]}"; do
     zone="${region}-a"
     vm_name="${vm_name_prefix}-${region}"
@@ -27,8 +29,9 @@ for region in "${regions[@]}"; do
     #gcloud -q compute --project=${google_cloud_project} instances create ${vm_name} --zone=${zone} --machine-type=n1-standard-1 --subnet=default --network-tier=PREMIUM --maintenance-policy=MIGRATE --service-account=${google_cloud_service_account} --scopes=https://www.googleapis.com/auth/cloud-platform --image=debian-9-stretch-v20181011 --image-project=debian-cloud --boot-disk-size=10GB --boot-disk-type=pd-standard --boot-disk-device-name=${vm_name} --labels=app=resolver-benchmark,region=${region}
     vm_external_ip=`gcloud compute instances list --filter=${vm_name} --format=yaml | grep natIP | cut -f2 -d':' | awk '{$1=$1;print}'`
     echo -e "\tVM External IP: ${vm_external_ip}"
-    created_vms_and_zones=( ["${vm_name}"]="${zone}" "${created_vms_and_zones[@]}" )
-    created_vms_and_ips=( ["${vm_name}"]="${vm_external_ip}" "${created_vms_and_ips[@]}" )
+    created_vms_and_zones["${vm_name}"]="${zone}"
+    created_vms_and_ips["${vm_name}"]="${vm_external_ip}"
+    created_vms+="${vm_name}"
     ssh-keygen -R ${vm_external_ip}
     echo -e "\tInit VM... (${vm_script_init})"
     #scp -o "StrictHostKeyChecking no" -o "UserKnownHostsFile /dev/null" "${vm_script_init}" ${vm_external_ip}:~/.
@@ -61,7 +64,18 @@ for region in "${regions[@]}"; do
 done
 
 echo "[[[ --- Starting Results collection --- ]]]"
-for vm_name in "${!created_vms_and_ips[@]}"; do
-    ip_address="${created_vms_and_ips[$vm_name]}"
+echo "${created_vms_and_ips[@]}"
+echo "${created_vms_and_zones[@]}"
+echo "${created_vms[@]}"
+for vm_name in "${created_vms[@]}"; do
+    ip_address=`gcloud compute instances list --filter=${vm_name} --format=yaml | grep natIP | cut -f2 -d':' | awk '{$1=$1;print}'`
     echo "---> Collecting results from ${vm_name} at ${ip_address}"
+    n_reports=`ssh -o "StrictHostKeyChecking no" -o "UserKnownHostsFile /dev/null" ${ip_address} "ls -alh app/reports/*csv" 2> /dev/null | wc -l | awk '{$1=$1;print}'`
+    while [ "$n_reports" != "4" ]; do
+        echo "This node is not finished yet, wait a few seconds..."
+        sleep 7
+        n_reports=`ssh -o "StrictHostKeyChecking no" -o "UserKnownHostsFile /dev/null" ${ip_address} "ls -alh app/reports/*csv" 2> /dev/null | wc -l | awk '{$1=$1;print}'`
+    done
+    echo -e "\tCollecting reports..."
+    scp -o "StrictHostKeyChecking no" -o "UserKnownHostsFile /dev/null" ${vm_external_ip}:~/app/reports/. "${folder_reports}"/.
 done
