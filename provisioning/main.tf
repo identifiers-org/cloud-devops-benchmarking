@@ -44,7 +44,7 @@ resource "google_compute_instance" "resolverBenchmarkVM" {
     metadata {
         region = "${var.working_region}"
         app = "resolver-benchmark"
-        user-data = "${data.template_file.launchscript.rendered}"
+        startup-script = "${data.template_file.launchscript.rendered}"
     }
 
     service_account {
