@@ -2,6 +2,9 @@
 # This is a template script to launch the benchmark
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
 
+# Get in the application folder
+cd app
+
 # Templating
 RESOLVER_HOST=PLACEHOLDER_RESOLVER_HOST
 RESOLVER_PROTOCOL=PLACEHOLDER_RESOLVER_PROTOCOL
