@@ -1,4 +1,6 @@
 #!/bin/bash
+# DISCLAIMER: yes, I know this code sucks, but I needed these numbers as soon as possible, I cannot be stuck on this. Also, it
+# served its purpose as a way of getting to know better Terraform
 folder_script_home=$(dirname "$0")
 folder_reports=${PROVISIONING_FOLDER_REPORTS:='reports'}
 folder_tmp=${PROVISIONING_FOLDER_TMP:='tmp'}
