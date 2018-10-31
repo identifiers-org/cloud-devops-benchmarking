@@ -54,7 +54,8 @@ for region in "${regions[@]}"; do
     sed -i "s/PLACEHOLDER_REQUEST_MODE/api/g" "${file_cloud_benchmark}"
     scp -o "StrictHostKeyChecking no" -o "UserKnownHostsFile /dev/null" "${file_cloud_benchmark}" ${vm_external_ip}:~/.
     echo -e "\tLaunching benchmarks"
-    ssh -o "StrictHostKeyChecking no" -o "UserKnownHostsFile /dev/null" ${vm_external_ip} "bash `basename ${file_cloud_benchmark}` ; `basename ${file_ebi_benchmark}` &"
+    ssh -o "StrictHostKeyChecking no" -o "UserKnownHostsFile /dev/null" ${vm_external_ip} "nohup bash `basename ${file_cloud_benchmark}` &"
+    ssh -o "StrictHostKeyChecking no" -o "UserKnownHostsFile /dev/null" ${vm_external_ip} "nohup bash `basename ${file_ebi_benchmark}` &"
 done
 
 echo "---> Starting"
