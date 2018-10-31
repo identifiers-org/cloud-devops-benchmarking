@@ -80,4 +80,6 @@ for vm_name in "${created_vms[@]}"; do
     done
     echo -e "\tCollecting reports..."
     scp -o "StrictHostKeyChecking no" -o "UserKnownHostsFile /dev/null" ${vm_external_ip}:~/app/reports/* "${folder_reports}"/.
+    echo -e "\tVM Decommissioning..."
+    gcloud compute instances
 done
