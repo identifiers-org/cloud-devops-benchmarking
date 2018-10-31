@@ -87,5 +87,6 @@ for vm_name in "${created_vms[@]}"; do
     scp -o "StrictHostKeyChecking no" -o "UserKnownHostsFile /dev/null" ${vm_external_ip}:~/app/reports/* "${folder_reports}"/.
     vm_zone=`gcloud compute instances list --filter=resolver-benchmarkvm-europe-west4 --format=yaml | grep zone:`
     vm_zone="${vm_zone##*/}"
-    echo -e "\tDecommissioning VM '${vm_name}', zone '${vm_zone}'"
+    echo -e "\t[[[ <<< --- Decommissioning VM '${vm_name}', zone '${vm_zone}' --- >>> ]]]"
+    gcloud -q compute instances delete ${vm_name} --zone=${vm_zone}
 done
