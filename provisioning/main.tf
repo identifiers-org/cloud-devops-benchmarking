@@ -25,6 +25,9 @@ resource "google_compute_instance" "resolverBenchmarkVM" {
     name = "resolverbenchmarkvm-${var.working_region}"
     machine_type = "g1-small"
     zone = "${var.working_zone}"
+    user_data = <<-EOF
+                #!/bin/bash
+                echo "Hello World" > test_init_user_data.txt
 
     tags = ["${var.working_region}", "resolver-benchmark"]
 
@@ -44,7 +47,6 @@ resource "google_compute_instance" "resolverBenchmarkVM" {
     metadata {
         region = "${var.working_region}"
         app = "resolver-benchmark"
-        startup-script = "${data.template_file.launchscript.rendered}"
     }
 
     service_account {
