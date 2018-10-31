@@ -25,6 +25,7 @@ resource "google_compute_instance" "resolverBenchmarkVM" {
     name = "resolverbenchmarkvm"
     machine_type = "g1-small"
     zone = "${var.working_zone}"
+    user_data = "${data.template_file.launchscript.rendered}"
 
     tags = ["${var.working_region}", "resolver-benchmark"]
 
